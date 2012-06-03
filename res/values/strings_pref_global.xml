@@ -12,6 +12,15 @@
 	<string name="GlobalNotif">Notifications</string>
 	<string name="GlobalNotifSummaryOn">Click to disable notifications</string>
 	<string name="GlobalNotifSummaryOff">Click to enable notifications</string>
+	
+	<string name="GlobalSend">Send data to remote server</string>
+	<string name="GlobalSendSummaryOn">Click to not send data</string>
+	<string name="GlobalSendSummaryOff">Click to send data</string>
+
+	<string name="GlobalSave">Save data locally</string>
+	<string name="GlobalSaveSummaryOn">Click to not save data</string>
+	<string name="GlobalSaveSummaryOff">Click to save data</string>
+
 
 	<string name="GlobalCatSet">Server settings</string>
 
@@ -26,5 +35,7 @@
 	<string name="GlobalAdvanced">Advanced Settings</string>
 	<string name="GlobalAdvancedSummary">Setup daemon settings, path to binaries ...</string>
 
+	<string name="GlobalSendCat">Send data to a remote server</string>
+	<string name="GlobalSaveCat">Save data locally</string>
 </resources>
 

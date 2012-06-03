@@ -15,11 +15,14 @@ public class FusionInventoryApp
 
     private SharedPreferences prefs;
     public Boolean mShouldAutoStart = null;
+    private Boolean mShouldSave = null;
+    private Boolean mShouldSend = null;
     public String mUrl = null;
     public String mTag = null;
     public String mLogin = null;
     public String mPassword = null;
     public String mDeviceID = null;
+    private String mPath = null;
 
     @Override
     public void onCreate() {
@@ -72,6 +75,8 @@ public class FusionInventoryApp
         }
         return mUrl;
     }
+    
+    
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -102,5 +107,25 @@ public class FusionInventoryApp
         }
         return mTag;
     }
-
+    
+    public Boolean getShouldSave() {
+        if (mShouldSave == null) {
+            mShouldSave = Boolean.valueOf(prefs.getBoolean("local", false));
+        }
+        return mShouldSave;
+    }
+    
+    public Boolean getShouldSend() {
+        if (mShouldSend == null) {
+            mShouldSend = Boolean.valueOf(prefs.getBoolean("remote", false));
+        }
+        return mShouldSend;
+    }
+    
+    public String getPath() {
+        if(mPath == null ) {
+            mPath = prefs.getString("localpath", "/sdcard/fusion.xml");
+        }
+        return mPath;
+    }
 }

@@ -71,23 +71,70 @@
             android:key="notif" android:defaultValue="false"
             />
 
-        <PreferenceCategory android:title="@string/GlobalCatSet"/>
+            <EditTextPreference 
+                android:dialogMessage="@string/tag"
+                android:persistent="true"
+                android:enabled="true"
+                android:selectable="true"
+                android:dialogTitle="@string/tag" android:title="@string/tag"
+                android:key="tag"
+             />
 
-        <EditTextPreference
-            android:title="@string/GlobalServer"
-            android:key="url"
-            android:summary="@string/GlobalServerSummary"
-            android:persistent="true"
-            />
-        <EditTextPreference android:dialogMessage="@string/tag" android:persistent="true" android:enabled="true" android:selectable="true" android:dialogTitle="@string/tag" android:title="@string/tag" android:key="tag"></EditTextPreference>
+             <PreferenceCategory android:title="@string/GlobalSendCat" />
+             <CheckBoxPreference 
+                 android:title="@string/GlobalSend"
+                 android:summaryOn="@string/GlobalSendSummaryOn"
+                 android:summaryOff="@string/GlobalSendSummaryOff"
+                 android:key="remote" android:defaultValue="true">
+             </CheckBoxPreference>
+             <PreferenceScreen
+                 android:title="Configure remote"
+                 android:summary="Summary Configure remote"
+                 android:dependency="remote">
+                 <PreferenceCategory
+                     android:title="@string/GlobalCatSet" />
+                     <EditTextPreference
+                         android:title="@string/GlobalServer"
+                         android:key="url"
+                         android:summary="@string/GlobalServerSummary"
+                         android:persistent="true" />
+                     <PreferenceCategory 
+                         android:title="@string/authentication_credentials">
+                         <EditTextPreference
+                             android:dialogMessage="@string/login"
+                             android:enabled="true" 
+                             android:persistent="true"
+                             android:title="@string/login"
+                             android:key="login"
+                          />
+                          <EditTextPreference
+                             android:dialogMessage="@string/password"
+                             android:persistent="true"
+                             android:title="@string/password"
+                             android:key="password" android:enabled="true"
+                          />
+                     </PreferenceCategory>
+             </PreferenceScreen>
 
-
-
-        <PreferenceCategory android:title="@string/authentication_credentials">
-            <EditTextPreference android:dialogMessage="@string/login" android:enabled="true" android:persistent="true" android:title="@string/login" android:key="login"></EditTextPreference>
-            <EditTextPreference android:dialogMessage="@string/password" android:persistent="true" android:title="@string/password" android:key="password" android:enabled="true"></EditTextPreference>
-        </PreferenceCategory>
-
+             <PreferenceCategory android:title="@string/GlobalSaveCat"/>
+                 <CheckBoxPreference
+                     android:title="@string/GlobalSave"
+                     android:summaryOn="@string/GlobalSaveSummaryOn"
+                     android:summaryOff="@string/GlobalSaveSummaryOff"
+                     android:key="local" android:defaultValue="false"
+                 />
+                 <PreferenceScreen
+                     android:title="Configure local"
+                     android:summary="Summary Configure local"
+                     android:dependency="local">
+                     <EditTextPreference
+                         android:dialogMessage="@string/localpath"
+                         android:enabled="true"
+                         android:persistent="true" 
+                         android:title="@string/localpath"
+                         android:key="localpath"
+                     />
+		 </PreferenceScreen>
 
     </PreferenceScreen>
 

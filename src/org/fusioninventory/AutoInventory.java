@@ -1,6 +1,8 @@
 package org.fusioninventory;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -218,6 +220,21 @@ public class AutoInventory
                 Toast.makeText(this, R.string.ok_inventory, Toast.LENGTH_SHORT).show();
             }
         }
+        
+        if(mFusionApp.getShouldSave()) {        
+            File file = new File(mFusionApp.getPath());
+            try {
+                FileWriter filewriter = new FileWriter(file);
+                filewriter.write(lastXMLResult);
+                filewriter.close();
+            } catch (IOException e) {
+                Toast.makeText(this, "Write failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+        
+        if(mFusionApp.getShouldSend() == false)
+            return;
+        
         URL url = null;
 
         try {
