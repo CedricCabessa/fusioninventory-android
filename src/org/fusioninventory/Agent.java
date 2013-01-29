@@ -213,7 +213,23 @@ public class Agent
 
             if (autoInventory)
             {
-                if (timeInventory.equals("Day"))
+                if (timeInventory.equals("Minute"))
+                {
+                    cal.set(Calendar.MINUTE, Calendar.getInstance().get(Calendar.MINUTE) + 1);
+                    Log.d("FUSION", "minute next alarm " + cal.toString());
+                }
+                else if (timeInventory.equals("5 Minute"))
+                {
+                    cal.set(Calendar.MINUTE, Calendar.getInstance().get(Calendar.MINUTE) + 5);
+                    Log.d("FUSION", "minute next alarm " + cal.toString());
+                }
+                else if (timeInventory.equals("Hour"))
+                {
+                    cal.set(Calendar.HOUR_OF_DAY, Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + 1);
+                    Log.d("FUSION", "hour next alarm " + cal.toString());
+
+                }
+                else if (timeInventory.equals("Day"))
                 {
                     cal.set(Calendar.HOUR_OF_DAY, 18);
                     cal.set(Calendar.MINUTE, 0);
@@ -481,6 +497,7 @@ public class Agent
                 intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        Log.d("FUSION", "next alarm at "+cal.getTimeInMillis() + " delta " + (cal.getTimeInMillis() -  System.currentTimeMillis() ));
 
     }
 

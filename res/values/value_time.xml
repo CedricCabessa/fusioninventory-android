@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<resources>
 		 <string-array name="Time">
+		         <item>minute</item>
+		         <item>5minute</item>
+		         <item>hour</item>
 		         <item>day</item>
 		         <item>week</item>
 		         <item>month</item>
 		 </string-array>
 		 <string-array name="TimeValue">
+		         <item>Minute</item>
+		         <item>5 Minute</item>
+                         <item>Hour</item>
 		         <item>Day</item>
 		         <item>Week</item>
 		         <item>Month</item>

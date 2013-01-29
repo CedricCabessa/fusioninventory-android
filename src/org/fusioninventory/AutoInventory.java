@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 
 import org.apache.http.Header;
 import org.apache.http.HttpException;
@@ -36,7 +37,10 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.fusioninventory.utils.EasySSLSocketFactory;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
@@ -79,6 +83,9 @@ public class AutoInventory
     private SchemeRegistry mSchemeRegistry = new SchemeRegistry();
 
     private FusionInventoryApp mFusionApp = null;
+
+    AlarmManager am;
+    private Calendar cal = Calendar.getInstance();
 
     private boolean notif = false;
 
@@ -188,6 +195,62 @@ public class AutoInventory
             inventory();
 
             send_inventory();
+
+
+            /// copied from Agent.java
+
+            customSharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean autoInventory = customSharedPreference.getBoolean("autoStartInventory", false);
+            String timeInventory = customSharedPreference.getString("timeInventory", "Week");
+            notif = customSharedPreference.getBoolean("notif", false);
+
+            if (autoInventory)
+            {
+                if (timeInventory.equals("Minute"))
+                {
+                    cal.set(Calendar.MINUTE, Calendar.getInstance().get(Calendar.MINUTE) + 1);
+                    Log.d("FUSION", "minute next alarm " + cal.toString());
+                }
+                else if (timeInventory.equals("5 Minute"))
+                {
+                    cal.set(Calendar.MINUTE, Calendar.getInstance().get(Calendar.MINUTE) + 5);
+                    Log.d("FUSION", "minute next alarm " + cal.toString());
+                }
+                else if (timeInventory.equals("Hour"))
+                {
+                    cal.set(Calendar.HOUR_OF_DAY, Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + 1);
+                    Log.d("FUSION", "hour next alarm " + cal.toString());
+
+                }
+                else if (timeInventory.equals("Day"))
+                {
+                    cal.set(Calendar.HOUR_OF_DAY, 18);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                }
+                else if(timeInventory.equals("Week"))
+                {
+                    cal.set(Calendar.DAY_OF_WEEK, 1);
+                    cal.set(Calendar.HOUR_OF_DAY, 18);
+                    cal.set(Calendar.MINUTE, 33);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                }
+                else if(timeInventory.equals("Month"))
+                {
+                    cal.set(Calendar.WEEK_OF_MONTH, 1);
+                    cal.set(Calendar.DAY_OF_WEEK, 1);
+                    cal.set(Calendar.HOUR_OF_DAY, 18);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                }
+
+                am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                setRepeatingAlarm();
+            }
+            //// /Agent.java
 
         }
 
@@ -390,6 +453,16 @@ public class AutoInventory
 
             return mMessenger.getBinder();
         }
+
+    private void setRepeatingAlarm() {
+        Intent intent = new Intent(this, TimeAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        Log.d("FUSION", "next alarm at "+cal.getTimeInMillis() + " delta " + (cal.getTimeInMillis() -  System.currentTimeMillis() ));
+
+    }
 
     // private final IBinder mBinder = new AgentBinder();
 }
