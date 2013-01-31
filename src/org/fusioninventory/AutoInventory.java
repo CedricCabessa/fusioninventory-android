@@ -206,7 +206,8 @@ public class AutoInventory
 
             if (autoInventory)
             {
-                if (timeInventory.equals("Minute"))
+              //FIXME: BORK: read value so depend of language !!
+                if (timeInventory.equals("Minute")) 
                 {
                     cal.set(Calendar.MINUTE, Calendar.getInstance().get(Calendar.MINUTE) + 1);
                     Log.d("FUSION", "minute next alarm " + cal.toString());
